@@ -17,6 +17,10 @@ CordovaSquareReader.prototype.pairCardReaders = function (successCallback, error
   cordova.exec(successCallback, errorCallback, "CordovaSquareReader", "pairCardReaders", []);
 };
 
+CordovaSquareReader.prototype.deauthorizeReaderSDKIfPossible = function (successCallback, errorCallback) {
+    cordova.exec(successCallback, errorCallback, "CordovaSquareReader", "deauthorizeReaderSDKIfPossible", []);
+};
+
 CordovaSquareReader.install = function () {
   window.squarereader = new CordovaSquareReader();
 

@@ -220,12 +220,35 @@ import AVKit
         guard let currentCommand = self.currentCommand else {
             return
         }
-        
+
+        var tenderType: String = "undefined"
+
+        if let tender = result.tenders.first?.type.rawValue {
+            switch tender {
+            case 0:
+                tenderType = "other"
+                break
+            case 1:
+                tenderType = "card"
+                break
+            case 2:
+                tenderType = "cash"
+                break
+            default:
+                break
+            }
+        } else {
+            NSLog("No tender type available")
+        }
+        NSLog(tenderType);
+
         let amountCollected:Float = Float(result.totalMoney.amount) / 100;
         let checkoutResultDict: NSDictionary = ["transactionClientID": result.transactionClientID,
                                                 "transactionID": result.transactionID,
+                                                "tenderTpe": tenderType,
                                                 "locationID": result.locationID,
                                                 "amountCollected": amountCollected]
+
         do {
             let JSONPayload: Data = try JSONSerialization.data(withJSONObject: checkoutResultDict, options: JSONSerialization.WritingOptions.prettyPrinted)
             let JSONString = String(data: JSONPayload, encoding: String.Encoding.utf8)
@@ -273,5 +296,28 @@ import AVKit
         self.commandDelegate.send(CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription), callbackId: currentCommand.callbackId)
         
         self.currentCommand = nil
+    }
+
+    @objc(deauthorizeReaderSDKIfPossible:)
+    func deauthorizeReaderSDKIfPossible(command: CDVInvokedUrlCommand) {
+        NSLog("Entro a DEAUTHORIZE")
+        if SQRDReaderSDK.shared.canDeauthorize {
+            SQRDReaderSDK.shared.deauthorize { error in
+                if let deauthError = error {
+                    // Handle error
+                    print(deauthError)
+                    print("Deauthorize ERROR")
+                    self.commandDelegate.send(CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Error"), callbackId: command.callbackId)
+                }
+                else {
+                    print("Deauthorize SUCCESS")
+                    // Deauthorization succeeded
+                    self.commandDelegate.send(CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "Response"), callbackId: command.callbackId)
+                }
+            }
+        } else {
+            print("Cannot deauthorize.")
+            self.commandDelegate.send(CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "Response"), callbackId: command.callbackId)
+        }
     }
 }
