@@ -181,7 +181,6 @@ import AVKit
         // Create parameters to customize the behavior of the checkout flow.
         let params = SQRDCheckoutParameters(amountMoney: amountMoney)
         params.additionalPaymentTypes = [.manualCardEntry, .cash, .other]
-        params.note = commandParams["note"] ?? ""
 
         // Create a checkout controller and call present to start checkout flow.
         let checkoutController = SQRDCheckoutController(
@@ -221,8 +220,11 @@ import AVKit
         guard let currentCommand = self.currentCommand else {
             return
         }
-
         var tenderType:String = "Unknown";
+        let tenderId:String = result.tenders.first?.tenderID ?? "";
+        //NSLog("Frist TENDER")
+        //dump(result.tenders.first!);
+        dump(result);
         if let tender = result.tenders.first?.type.rawValue {
             switch tender {
             case 0:
@@ -240,15 +242,20 @@ import AVKit
         } else {
             NSLog("No tender type available")
         }
-        NSLog(tenderType);
+        //NSLog(tenderType);
+
+        let formatter = ISO8601DateFormatter();
+        let createdAtString = formatter.string(from: result.createdAt);
+        NSLog(createdAtString);
 
         let amountCollected:Float = Float(result.totalMoney.amount) / 100;
         let checkoutResultDict: NSDictionary = ["transactionClientID": result.transactionClientID,
                                                 "transactionID": result.transactionID,
+                                                "tenderID": tenderId,
                                                 "tenderType": tenderType,
                                                 "locationID": result.locationID,
+                                                "createdAt": createdAtString,
                                                 "amountCollected": amountCollected]
-
         do {
             let JSONPayload: Data = try JSONSerialization.data(withJSONObject: checkoutResultDict, options: JSONSerialization.WritingOptions.prettyPrinted)
             let JSONString = String(data: JSONPayload, encoding: String.Encoding.utf8)
@@ -300,7 +307,7 @@ import AVKit
 
     @objc(deauthorizeReaderSDKIfPossible:)
     func deauthorizeReaderSDKIfPossible(command: CDVInvokedUrlCommand) {
-        NSLog("Entro a DEAUTHORIZE")
+        NSLog("deauthorizeReaderSDKIfPossible called")
         if SQRDReaderSDK.shared.canDeauthorize {
             SQRDReaderSDK.shared.deauthorize { error in
                 if let deauthError = error {
@@ -316,7 +323,8 @@ import AVKit
                 }
             }
         } else {
-            print("Cannot deauthorize.")
+            print("Cannot deauthorize.  Assuming no longer valid.")
+            self.commandDelegate.send(CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "Response"), callbackId: command.callbackId)
         }
     }
 }
