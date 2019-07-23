@@ -181,6 +181,7 @@ import AVKit
         // Create parameters to customize the behavior of the checkout flow.
         let params = SQRDCheckoutParameters(amountMoney: amountMoney)
         params.additionalPaymentTypes = [.manualCardEntry, .cash, .other]
+        params.note = commandParams["note"] ?? ""
 
         // Create a checkout controller and call present to start checkout flow.
         let checkoutController = SQRDCheckoutController(
