@@ -2,10 +2,13 @@
 <plugin id="cordova-plugin-square-reader-enhanced" version="0.3.0"
         xmlns="http://apache.org/cordova/ns/plugins/1.0"
 >
+    <engines>
+      <engine name="cordova" version=">=3.0.0"/>
+    </engines>
 
     <name>CordovaSquareReader</name>
 
-    <dependency id="cordova-plugin-add-swift-support" version="1.7.2"/>
+    <dependency id="cordova-plugin-add-swift-support"/>
 
     <js-module name="CordovaSquareReader" src="www/CordovaSquareReader.js">
         <clobbers target="CordovaSquareReader" />
@@ -35,5 +38,7 @@
         <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
             <string>This app integrates with Square for card processing. Upload your account logo, feature photo and product images with the photos stored on your mobile device.</string>
         </config-file>
+
+        <framework custom="true" embed="true" src="./resources/ios/SquareReaderSDK.framework" />
     </platform>
 </plugin>
