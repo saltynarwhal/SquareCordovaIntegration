@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sudhirdhumal289/SquareCordovaIntegration.git"
+    "url": "git+https://github.com/saltynarwhal/SquareCordovaIntegration.git"
   },
   "keywords": [
     "ecosystem:cordova",
@@ -21,9 +21,9 @@
   "author": "CoffeeDevs",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/coffeedevs/SquareCordovaIntegration/issues"
+    "url": "https://github.com/saltynarwhal/SquareCordovaIntegration/issues"
   },
-  "homepage": "https://github.com/coffeedevs/SquareCordovaIntegration#readme",
+  "homepage": "https://github.com/saltynarwhal/SquareCordovaIntegration#readme",
   "publishConfig": {
     "access": "public"
   }
