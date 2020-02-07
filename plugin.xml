@@ -32,6 +32,9 @@
         <config-file target="*-Info.plist" parent="NSBluetoothPeripheralUsageDescription">
             <string>This app integrates with Square for card processing. Square uses Bluetooth to connect your device to compatible hardware.</string>
         </config-file>
+        <config-file target="*-Info.plist" parent="NSBluetoothAlwaysUsageDescription">
+            <string>This app integrates with Square for card processing. Square uses Bluetooth to connect your device to compatible hardware.</string>
+        </config-file>
         <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
             <string>This app integrates with Square for card processing. Upload your account logo, feature photo and product images with the photos stored on your mobile device.</string>
         </config-file>
