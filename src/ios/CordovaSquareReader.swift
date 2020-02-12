@@ -284,9 +284,9 @@ import AVKit
         _ readerSettingsController: SQRDReaderSettingsController) {
         print("Reader settings flow presented.")
 
-        guard let currentCommand = self.currentCommand else {
+        /*guard let currentCommand = self.currentCommand else {
             return
-        }
+        }*/
         self.commandDelegate.send(CDVPluginResult(status: CDVCommandStatus_OK), callbackId: currentCommand.callbackId)
 
         self.currentCommand = nil
@@ -298,9 +298,9 @@ import AVKit
         didFailToPresentWith error: Error) {
         print("Failed to present reader settings flow.")
 
-        guard let currentCommand = self.currentCommand else {
+        /*guard let currentCommand = self.currentCommand else {
             return
-        }
+        }*/
         self.commandDelegate.send(CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription), callbackId: currentCommand.callbackId)
 
         self.currentCommand = nil
