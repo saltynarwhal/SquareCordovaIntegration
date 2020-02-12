@@ -276,7 +276,7 @@ import AVKit
 
         self.currentCommand = command
 
-        readerSettingsController.present(from: self)
+        readerSettingsController.present(from: self.viewController)
     }
 
     @objc(readerSettingsControllerDidPresent:)
