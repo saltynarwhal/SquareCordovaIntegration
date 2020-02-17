@@ -260,7 +260,7 @@ import AVKit
         do {
             let JSONPayload: Data = try JSONSerialization.data(withJSONObject: checkoutResultDict, options: JSONSerialization.WritingOptions.prettyPrinted)
             let JSONString = String(data: JSONPayload, encoding: String.Encoding.utf8)
-            self.commandDelegate.send(CDVPluginResult(status: CDVCommandStatus_OK, messageAs: JSONPayload), callbackId: currentCommand.callbackId)
+            self.commandDelegate.send(CDVPluginResult(status: CDVCommandStatus_OK, messageAs: JSONString), callbackId: currentCommand.callbackId)
         } catch let error {
             self.commandDelegate.send(CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription), callbackId: currentCommand.callbackId)
         }
