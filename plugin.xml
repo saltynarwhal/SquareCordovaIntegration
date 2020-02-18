@@ -8,7 +8,7 @@
 
     <name>CordovaSquareReader</name>
 
-    <!--<dependency id="cordova-plugin-add-swift-support"/>-->
+    <dependency id="cordova-plugin-add-swift-support@1.7.2"/>
 
     <js-module name="CordovaSquareReader" src="www/CordovaSquareReader.js">
         <clobbers target="CordovaSquareReader" />
